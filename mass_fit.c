@@ -20,13 +20,10 @@ using namespace std;
 
 void mass_fit()
 {
-//TFile *file = new TFile("/nfs/lhcb/malexander01/charm/4pi/data/full-run-I/full_2011_data.root");
-TFile *file = new TFile("/nfs/lhcb/malexander01/charm/baryon-lifetimes-2015/data/run-II-data/turbo_2015_data.root");
-//TTree *tree = (TTree*) file->Get("Dst2010ToD0TopipipipipiTuple/DecayTree;1");
-TTree *tree = (TTree*) file->Get("Lambda_cToKppiTuple/DecayTree;1");
+TFile *file = new TFile("/nfs/lhcb/malexander01/charm/4pi/data/full-run-I/full_2011_data.root");
+TTree *tree = (TTree*) file->Get("Dst2010ToD0TopipipipipiTuple/DecayTree;1");
 
-//RooRealVar D0_M("D0_M","D0_M",1780,1950);
-RooRealVar D0_M("Lambda_cplus_M","Lambda_cplus_M",2216,2356);
+RooRealVar D0_M("D0_M","D0_M",1780,1950);
 
 // --Constructors--
 // const char* name,const char* title,const RooArgSet &vars,const char* wgtVarName = 0 (for an empty ds)
@@ -36,8 +33,7 @@ RooRealVar D0_M("Lambda_cplus_M","Lambda_cplus_M",2216,2356);
 RooDataSet data("data","data",tree,RooArgSet(D0_M)); // stops here***********************************************
 
 // Gaussian signal PDF
-//RooRealVar sigmean("sigmean","D^{0} mass",1865,1805,1925);
-RooRealVar sigmean("sigmean","D^{0} mass",2250,2216,2356);
+RooRealVar sigmean("sigmean","D^{0} mass",1865,1805,1925);
 RooRealVar sigwidth("sigwidth","D^{0} width",10.,0.5,50.);
 RooGaussian signal("signal","Signal PDF",D0_M,sigmean,sigwidth);
 
@@ -63,5 +59,5 @@ RooPlot* frame = D0_M.frame();
 data.plotOn(frame);
 model.plotOn(frame);
 frame->Draw();
-c.SaveAs("gediminas_data.pdf");
+c.SaveAs("D0_mass_fit.pdf");
 }
